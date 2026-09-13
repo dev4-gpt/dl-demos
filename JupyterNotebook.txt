@@ -1,0 +1,35 @@
+Jupyter Notebook 
+https://ood-burst-001.hpc.nyu.edu/ (OOD for Burst Node)
+
+
+bash-5.1$ mkdir -p ~/.local/share/jupyter/kernels
+bash-5.1$ cd ~/.local/share/jupyter/kernels
+bash-5.1$ cp -R /share/apps/mypy/src/kernel_template ./my_env
+bash-5.1$ cd ./my_env
+bash-5.1$ ls
+
+bash-5.1$ vim python
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+singularity exec $nv \
+  --overlay /scratch/sg8304/example/overlay-15GB-500K.ext3:ro \  # <- change
+  /scratch/sg8304/example/cuda11.8.86-cudnn8.7-devel-ubuntu22.04.2.sif \  # <- change
+  /bin/bash -c "source /ext3/env.sh; $cmd $args"
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+bash-5.1$ vim kernel.json
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+{
+ "argv": [
+  "/home/sg8304/.local/share/jupyter/kernels/my_env/python",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "my_env",
+ "language": "python"
+}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
